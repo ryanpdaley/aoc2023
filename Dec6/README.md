@@ -45,8 +45,6 @@ To see how much margin of error you have, determine the number of ways you can b
 
 Determine the number of ways you could beat the record in each race. What do you get if you multiply these numbers together?
 
-Your puzzle answer was 2344708.
-
 <details>
   <summary>Solution</summary>
 
@@ -72,8 +70,6 @@ Distance: 940200
 Now, you have to figure out how many ways there are to win this single race. In this example, the race lasts for 71530 milliseconds and the record distance you need to beat is 940200 millimeters. You could hold the button anywhere from 14 to 71516 milliseconds and beat the record, a total of 71503 ways!
 
 How many ways can you beat the record in this one much longer race?
-
-Your puzzle answer was 30125202.
 
 <details>
   <summary>Solution</summary>
