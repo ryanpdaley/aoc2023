@@ -1,13 +1,20 @@
+import functools
 f = open('data.txt', 'r')
-# f = open('sampleData.txt', 'r')
 dataRows = f.readlines()
 
 groups = ['seed-to-soil map:', 'soil-to-fertilizer map:', 'fertilizer-to-water map:', 'water-to-light map:',
           'light-to-temperature map:', 'temperature-to-humidity map:', 'humidity-to-location map:']
 
 
-def getSeeds():
-    return dataRows[0].strip().split('seeds: ')[1].split(' ')
+def getSeedRanges():
+    seeds = []
+    seedStr = dataRows[0].strip().split('seeds: ')[1].split(' ')
+    rawSeeds = [int(x) for x in seedStr]
+    rawSeedLength = len(rawSeeds)
+    for x in range(0, rawSeedLength, 2):
+        seedRange = [rawSeeds[x], rawSeeds[x] + rawSeeds[x+1]]
+        seeds.append(seedRange)
+    return seeds
 
 
 def getMap(header):
@@ -37,16 +44,24 @@ def findMapping(id, map):
     return id
 
 
+@functools.lru_cache
+def cachedSeed(seed):
+    id = seed
+    for group in groups:
+        map = getMap(group)
+        id = findMapping(id, map)
+    return id
+
+
 def solution():
-    locations = []
-    seeds = getSeeds()
-    for seed in seeds:
-        id = seed
-        for group in groups:
-            map = getMap(group)
-            id = findMapping(id, map)
-        locations.append(id)
-    print(min(locations))
+    minLocation = 100000000000000
+    seedRanges = getSeedRanges()
+    for seedRange in seedRanges:
+        for seed in range(seedRange[0], seedRange[1]):
+            print(seed)
+            id = cachedSeed(seed)
+            minLocation = min(minLocation, id)
+    print(minLocation)
 
 
 solution()
